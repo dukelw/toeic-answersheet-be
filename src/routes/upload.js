@@ -4,6 +4,11 @@ const router = express.Router();
 const UploadController = require("../controllers/UploadController");
 const { uploadDisk } = require("../configs/multer");
 
+router.post(
+  "/answer-audio",
+  uploadDisk.single("audio"),
+  UploadController.uploadAudio
+);
 router.post("/answer", uploadDisk.single("file"), UploadController.uploadThumb);
 
 module.exports = router;

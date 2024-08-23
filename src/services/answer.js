@@ -1,7 +1,7 @@
 const { AnswerModel } = require("../models/Answer");
 
 class AnswerService {
-  add = async ({ name, content, image }) => {
+  add = async ({ name, content, image, audio }) => {
     const foundAnswer = await AnswerModel.findOne({ answer_name: name });
     if (foundAnswer) throw new Error("This test already has an answer!");
 
@@ -9,7 +9,22 @@ class AnswerService {
       answer_name: name,
       answer_content: content,
       answer_image: image,
+      answer_audio: audio,
     });
+
+    return { result };
+  };
+
+  update = async (name, bodyUpdate) => {
+    const foundAnswer = await AnswerModel.findOne({ answer_name: name });
+
+    if (!foundAnswer) throw new Error("Answer not found!");
+
+    const result = await AnswerModel.updateOne(
+      { answer_name: name },
+      { $set: bodyUpdate },
+      { upsert: true }
+    );
 
     return { result };
   };
@@ -23,6 +38,7 @@ class AnswerService {
       name: foundAnswer.answer_name,
       content: foundAnswer.answer_content,
       image: foundAnswer.answer_image,
+      audio: foundAnswer.answer_audio,
     };
     return answer;
   };

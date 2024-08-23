@@ -40,7 +40,20 @@ const uploadImageFromLocal = async ({
   }
 };
 
+const uploadAudioFromLocal = async (path) => {
+  try {
+    const result = await cloudinary.uploader.upload(path, {
+      resource_type: "video",
+    });
+    return { audio_url: result.secure_url };
+  } catch (error) {
+    console.error("Upload failed:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   uploadImageFromUrl,
   uploadImageFromLocal,
+  uploadAudioFromLocal,
 };

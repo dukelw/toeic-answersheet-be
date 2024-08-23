@@ -1,26 +1,29 @@
 const { Schema, model } = require("mongoose");
 
-const DOCUMENT_NAME = "Answer";
-const COLLECTION_NAME = "Answers";
+const DOCUMENT_NAME = "User";
+const COLLECTION_NAME = "Users";
 
-var answerSchema = new Schema(
+var userSchema = new Schema(
   {
-    answer_name: {
+    user_name: {
       type: String,
       required: true,
     },
-    answer_content: {
+    user_email: {
       type: String,
-      default: "",
       required: true,
     },
-    answer_image: {
+    user_avatar: {
       type: String,
       default: "",
     },
-    answer_audio: {
+    user_password: {
       type: String,
-      default: "",
+      required: true,
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false,
     },
   },
   {
@@ -30,5 +33,5 @@ var answerSchema = new Schema(
 );
 
 module.exports = {
-  AnswerModel: model(DOCUMENT_NAME, answerSchema),
+  UserModel: model(DOCUMENT_NAME, userSchema),
 };

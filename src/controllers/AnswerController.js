@@ -2,10 +2,16 @@ const AnswerService = require("../services/answer");
 
 class AnswerController {
   async create(req, res, next) {
-    const { name, content, image } = req.body;
+    const { name, content, image, audio } = req.body;
     console.log(req.body, name, content, image);
-    const result = await AnswerService.add({ name, content, image });
-    res.send(result);
+    const result = await AnswerService.add({ name, content, image, audio });
+    res.status(200).send(result);
+  }
+
+  async update(req, res, next) {
+    const { name, update } = req.body;
+    const result = await AnswerService.update(name, update);
+    res.status(200).send(result);
   }
 
   async find(req, res, next) {
