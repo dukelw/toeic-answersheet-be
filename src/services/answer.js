@@ -47,6 +47,14 @@ class AnswerService {
     const foundAnswers = await AnswerModel.find().sort({ answer_name: 1 });
     return foundAnswers;
   };
+
+  delete = async (ID) => {
+    const foundAnswer = await AnswerModel.findById(ID);
+    if (!foundAnswer) throw new Error("Cannot find answer for this test!");
+
+    const result = await AnswerModel.deleteOne({ _id: ID });
+    return result;
+  };
 }
 
 module.exports = new AnswerService();

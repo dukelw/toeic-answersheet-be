@@ -9,6 +9,10 @@ router.post(
   uploadDisk.single("audio"),
   UploadController.uploadAudio
 );
-router.post("/answer", uploadDisk.single("file"), UploadController.uploadThumb);
+router.post(
+  "/answer-image",
+  uploadDisk.single("file"),
+  UploadController.uploadThumb
+);
 
 module.exports = router;

@@ -25,6 +25,12 @@ class AnswerController {
     const result = await AnswerService.findAll();
     res.status(200).send(result);
   }
+
+  async delete(req, res, next) {
+    const ID = req.params.id;
+    const result = await AnswerService.delete(ID);
+    res.status(200).send(result);
+  }
 }
 
 module.exports = new AnswerController();
