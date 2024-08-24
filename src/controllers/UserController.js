@@ -35,10 +35,11 @@ class UserController {
   }
 
   async find(req, res, next) {
+    const id = req.params.id;
     new SuccessResponse({
       message: "Find user successfully",
       metadata: await userService.find({
-        user_id: req.body.user_id,
+        user_id: id,
       }),
     }).send(res);
   }

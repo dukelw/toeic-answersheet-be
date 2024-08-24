@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const keyTokenService = require("./key-token");
 const { generatePairOfToken } = require("../auth/utils");
-const { getInfoData, convertToObjectIDMongo } = require("../utils/index");
+const { getInfoData } = require("../utils/index");
 const { findByEmail } = require("../helpers/function/user");
+const { BadRequestError } = require("../core/error-response");
 
 class UserService {
   signUp = async ({ name, email, password, isAdmin }) => {
