@@ -11,6 +11,7 @@ router.get(
   asyncHandler(historyController.getRankOfATest)
 );
 router.get("/find-top-multi", asyncHandler(historyController.getRankOfAllTest));
+router.get("/highest/:id", asyncHandler(historyController.getHighestOfUser));
 router.get("/find", asyncHandler(historyController.find));
 router.post("/", asyncHandler(historyController.create));
 

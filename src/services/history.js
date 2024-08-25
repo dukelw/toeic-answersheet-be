@@ -65,6 +65,21 @@ class HistoryService {
     return foundHistorys;
   };
 
+  findHighestScoreOfUser = async (userID) => {
+    try {
+      const highestScoreRecord = await HistoryModel.findOne({
+        history_user_id: userID,
+      })
+        .sort({ history_score: -1 })
+        .limit(1);
+
+      return highestScoreRecord;
+    } catch (error) {
+      console.error("Error finding highest score:", error);
+      throw error;
+    }
+  };
+
   findAllOfTest = async (testID) => {
     const foundHistorys = await HistoryModel.find({
       history_answer_id: testID,

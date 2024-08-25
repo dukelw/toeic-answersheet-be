@@ -3,16 +3,17 @@ const router = express.Router();
 
 const UploadController = require("../controllers/UploadController");
 const { uploadDisk } = require("../configs/multer");
+const asyncHandler = require("../helpers/async-handler");
 
 router.post(
   "/answer-audio",
   uploadDisk.single("audio"),
-  UploadController.uploadAudio
+  asyncHandler(UploadController.uploadAudio)
 );
 router.post(
   "/answer-image",
   uploadDisk.single("file"),
-  UploadController.uploadThumb
+  asyncHandler(UploadController.uploadThumb)
 );
 
 module.exports = router;

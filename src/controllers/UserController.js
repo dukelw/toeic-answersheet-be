@@ -44,6 +44,16 @@ class UserController {
     }).send(res);
   }
 
+  async updateInformation(req, res, next) {
+    new SuccessResponse({
+      message: "Update information successfully",
+      metadata: await userService.updateInformation({
+        ...req.body,
+        userID: req.user.user_id,
+      }),
+    }).send(res);
+  }
+
   async changePassword(req, res, next) {
     new SuccessResponse({
       message: "Change password successfully",

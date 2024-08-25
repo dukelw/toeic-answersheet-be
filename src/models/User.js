@@ -21,6 +21,16 @@ var userSchema = new Schema(
       type: String,
       required: true,
     },
+    user_birthday: {
+      type: Date,
+    },
+    user_gender: {
+      Type: String,
+      enum: ["male", "female", "other"],
+    },
+    user_phone: {
+      Type: String,
+    },
     isAdmin: {
       type: Boolean,
       default: false,

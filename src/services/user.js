@@ -5,7 +5,7 @@ const keyTokenService = require("./key-token");
 const { generatePairOfToken } = require("../auth/utils");
 const { getInfoData } = require("../utils/index");
 const { findByEmail } = require("../helpers/function/user");
-const { BadRequestError } = require("../core/error-response");
+const { BadRequestError, AuthFailureError } = require("../core/error-response");
 
 class UserService {
   signUp = async ({ name, email, password, isAdmin }) => {
@@ -99,7 +99,16 @@ class UserService {
 
     return {
       user: getInfoData({
-        fields: ["_id", "user_name", "user_email", "user_avatar", "isAdmin"],
+        fields: [
+          "_id",
+          "user_name",
+          "user_email",
+          "user_avatar",
+          "user_birthday",
+          "user_phone",
+          "user_gender",
+          "isAdmin",
+        ],
         object: foundUser,
       }),
       tokens,
@@ -159,7 +168,11 @@ class UserService {
       _id: foundUser._id,
       name: foundUser.user_name,
       email: foundUser.user_email,
+      birthday: foundUser.user_birthday,
       avatar: foundUser.user_avatar,
+      phone: foundUser.user_phone,
+      gender: foundUser.user_gender,
+      createdAt: foundUser.createdAt,
     };
     return {
       user,
@@ -167,37 +180,34 @@ class UserService {
   };
 
   updateInformation = async ({
-    user_id,
+    userID,
     name,
     email,
-    phone_number,
-    gender,
     birthday,
-    address,
-    bank_account_number,
-    thumb,
+    phone,
+    gender,
+    avatar,
   }) => {
-    const foundUser = await UserModel.findById(user_id);
+    const foundUser = await UserModel.findById(userID);
     if (!foundUser) throw new NotFoundError("User not found");
     const filter = {
-      _id: user_id,
+      _id: userID,
     };
 
     const bodyUpdate = {
-      name,
-      email,
-      phone_number,
-      gender,
-      birthday: new Date(birthday),
-      address,
-      bank_account_number,
-      thumb,
+      user_name: name,
+      user_email: email,
+      user_phone: phone,
+      user_gender: gender,
+      user_birthday: new Date(birthday),
+      user_avatar: avatar,
     };
 
     const updatedUser = await UserModel.findOneAndUpdate(filter, bodyUpdate, {
       new: true,
     });
 
+    console.log("Updated user:::", updatedUser);
     return updatedUser;
   };
 
@@ -207,7 +217,7 @@ class UserService {
     if (!foundUser) throw new BadRequestError("User has not registered");
 
     // 2. Match password
-    const isMatch = await bcrypt.compare(password, foundUser.password);
+    const isMatch = await bcrypt.compare(password, foundUser.user_password);
     if (!isMatch) throw new AuthFailureError("Authentication failed");
 
     // 4. Hash password
@@ -215,8 +225,8 @@ class UserService {
 
     // 4. Change password
     const updatedUser = await UserModel.findOneAndUpdate(
-      { email },
-      { password: hashedPassword }
+      { user_email: email },
+      { user_password: hashedPassword }
     );
 
     console.log("Updated user: " + updatedUser, updatedUser.modifiedCount);

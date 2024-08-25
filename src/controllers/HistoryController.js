@@ -31,6 +31,12 @@ class HistoryController {
     res.status(200).send(result);
   }
 
+  async getHighestOfUser(req, res, next) {
+    const ID = req.params.id;
+    const result = await HistoryService.findHighestScoreOfUser(ID);
+    res.status(200).send(result);
+  }
+
   async delete(req, res, next) {
     const ID = req.params.id;
     const result = await HistoryService.delete(ID);
