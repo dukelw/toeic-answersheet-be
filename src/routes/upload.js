@@ -15,5 +15,10 @@ router.post(
   uploadDisk.single("file"),
   asyncHandler(UploadController.uploadThumb)
 );
+router.post(
+  "/file",
+  uploadDisk.single("file"),
+  asyncHandler(UploadController.uploadFile)
+);
 
 module.exports = router;
