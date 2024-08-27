@@ -5,7 +5,11 @@ const keyTokenService = require("./key-token");
 const { generatePairOfToken } = require("../auth/utils");
 const { getInfoData } = require("../utils/index");
 const { findByEmail } = require("../helpers/function/user");
-const { BadRequestError, AuthFailureError } = require("../core/error-response");
+const {
+  BadRequestError,
+  AuthFailureError,
+  NotFoundError,
+} = require("../core/error-response");
 
 class UserService {
   signUp = async ({ name, email, password, isAdmin }) => {
@@ -162,7 +166,7 @@ class UserService {
 
   find = async ({ user_id }) => {
     const foundUser = await UserModel.findById(user_id);
-    if (!foundUser) throw new NotFoundError("Can find user");
+    if (!foundUser) throw new NotFoundError("Can't find user");
 
     const user = {
       _id: foundUser._id,

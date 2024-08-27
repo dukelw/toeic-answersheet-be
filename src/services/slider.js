@@ -73,22 +73,31 @@ class SliderService {
     return foundSliders;
   };
 
-  findCollections = async () => {
-    const collections = await SliderModel.aggregate([
-      {
-        $group: {
-          _id: "$slider_collection",
-          isActive: { $first: "$isActive" },
+  findCollections = async (keySearch = "") => {
+    const collections = await SliderModel.aggregate(
+      [
+        {
+          $group: {
+            _id: "$slider_collection",
+            isActive: { $first: "$isActive" },
+          },
         },
-      },
-      {
-        $project: {
-          slider_collection: "$_id",
-          isActive: 1,
-          _id: 0,
+        {
+          $project: {
+            slider_collection: "$_id",
+            isActive: 1,
+            _id: 0,
+          },
         },
-      },
-    ]).sort({ slider_collection: -1 });
+        keySearch
+          ? {
+              $match: {
+                slider_collection: { $regex: keySearch, $options: "i" },
+              },
+            }
+          : null,
+      ].filter(Boolean)
+    ).sort({ slider_collection: -1 });
 
     return collections;
   };

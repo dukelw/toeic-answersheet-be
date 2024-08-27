@@ -22,7 +22,8 @@ class AnswerController {
   }
 
   async getAll(req, res, next) {
-    const result = await AnswerService.findAll();
+    const keySearch = req.query.key;
+    const result = await AnswerService.findAll(keySearch);
     res.status(200).send(result);
   }
 

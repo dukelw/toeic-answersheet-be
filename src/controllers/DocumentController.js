@@ -21,7 +21,8 @@ class DocumentController {
   }
 
   async getAll(req, res, next) {
-    const result = await DocumentService.findAll();
+    const keySearch = req.query.key;
+    const result = await DocumentService.findAll(keySearch);
     res.status(200).send(result);
   }
 

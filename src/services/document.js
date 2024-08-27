@@ -44,10 +44,19 @@ class DocumentService {
     return answer;
   };
 
-  findAll = async () => {
-    const foundDocuments = await DocumentModel.find().sort({
-      document_name: 1,
-    });
+  findAll = async (keySearch = "") => {
+    let foundDocuments;
+    if (keySearch) {
+      foundDocuments = await DocumentModel.find({
+        document_name: { $regex: keySearch, $options: "i" },
+      }).sort({
+        document_name: 1,
+      });
+    } else {
+      foundDocuments = await DocumentModel.find().sort({
+        document_name: 1,
+      });
+    }
     return foundDocuments;
   };
 

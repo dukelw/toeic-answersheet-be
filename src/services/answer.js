@@ -43,8 +43,19 @@ class AnswerService {
     return answer;
   };
 
-  findAll = async () => {
-    const foundAnswers = await AnswerModel.find().sort({ answer_name: 1 });
+  findAll = async (keySearch = "") => {
+    let foundAnswers;
+    if (keySearch) {
+      foundAnswers = await AnswerModel.find({
+        answer_name: { $regex: keySearch, $options: "i" },
+      }).sort({
+        answer_name: 1,
+      });
+    } else {
+      foundAnswers = await AnswerModel.find().sort({
+        answer_name: 1,
+      });
+    }
     return foundAnswers;
   };
 

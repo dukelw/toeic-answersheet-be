@@ -31,7 +31,8 @@ class SliderController {
   }
 
   async findCollections(req, res, next) {
-    const result = await SliderService.findCollections();
+    const keySearch = req.query.key;
+    const result = await SliderService.findCollections(keySearch);
     res.status(200).send(result);
   }
 
