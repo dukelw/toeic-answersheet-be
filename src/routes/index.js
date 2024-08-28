@@ -4,6 +4,7 @@ const userRouter = require("./user");
 const historyRouter = require("./history");
 const documentRouter = require("./document");
 const sliderRouter = require("./slider");
+const commentRouter = require("./comment");
 
 function route(app) {
   app.use("/api/v1/upload", uploadRouter);
@@ -12,6 +13,7 @@ function route(app) {
   app.use("/api/v1/history", historyRouter);
   app.use("/api/v1/document", documentRouter);
   app.use("/api/v1/slider", sliderRouter);
+  app.use("/api/v1/comment", commentRouter);
 }
 
 module.exports = route;
