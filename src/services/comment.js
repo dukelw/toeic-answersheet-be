@@ -137,6 +137,11 @@ class CommentService {
     return comments;
   }
 
+  async getCommentByID({ comment_id, limit = 10, offset = 0 }) {
+    const comment = await CommentModel.findById(comment_id);
+    return comment;
+  }
+
   async deleteComment({ comment_id, answer_id }) {
     // Check answer's existence in database
     const foundAnswer = await AnswerModel.findById(answer_id);

@@ -7,6 +7,7 @@ const PORT = 4000;
 const http = require("http");
 const { Server } = require("socket.io");
 const commentService = require("../src/services/comment");
+const notificationService = require("../src/services/notification");
 
 const corsOptions = {
   origin: "http://localhost:1610",
@@ -57,8 +58,22 @@ io.on("connection", (socket) => {
         content,
         parent_comment_id,
       });
+      const foundComment = await commentService.getCommentByID({
+        comment_id: parent_comment_id,
+      });
+      console.log(foundComment);
+      const newNotification = await notificationService.create({
+        notification_answer_id: answer_id,
+        notification_sender_id: user_id,
+        notification_receiver_id: foundComment?.comment_user?.user_id,
+        notification_content: content,
+      });
       if (parent_comment_id) {
         io.in(answer_id).emit("reply_comment", {});
+        io.in(foundComment.comment_user.user_id).emit(
+          "receive_notification",
+          newNotification
+        );
       } else {
         io.in(answer_id).emit("receive_comment", newComment);
       }
