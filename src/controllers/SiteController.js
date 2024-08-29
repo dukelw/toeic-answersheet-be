@@ -1,7 +1,13 @@
 const AnswerService = require("../services/answer");
 class SiteController {
   async welcome(req, res, next) {
-    res.send({ message: "Welcome to Answer API" });
+    try {
+      const result = await AnswerService.findAll();
+      console.log(result);
+      res.status(200).send(result);
+    } catch (err) {
+      res.send(err);
+    }
   }
 }
 
