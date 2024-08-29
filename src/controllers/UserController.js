@@ -44,11 +44,30 @@ class UserController {
     }).send(res);
   }
 
+  async findAll(req, res, next) {
+    const keySearch = req.query.key;
+    new SuccessResponse({
+      message: "Find user successfully",
+      metadata: await userService.findAll(keySearch),
+    }).send(res);
+  }
+
   async updateInformation(req, res, next) {
     new SuccessResponse({
       message: "Update information successfully",
       metadata: await userService.updateInformation({
         ...req.body,
+        userID: req.user.user_id,
+      }),
+    }).send(res);
+  }
+
+  async delete(req, res, next) {
+    const deleteID = req.params.id;
+    new SuccessResponse({
+      message: "Delete user successfully",
+      metadata: await userService.delete({
+        deleteID,
         userID: req.user.user_id,
       }),
     }).send(res);

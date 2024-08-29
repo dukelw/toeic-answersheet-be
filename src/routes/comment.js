@@ -11,7 +11,7 @@ router.get(
   asyncHandler(commentController.getParentCommentOfAnswer)
 );
 router.get("", asyncHandler(commentController.getCommentByParentID));
-// router.use(authentication);
+router.use(authentication);
 router.post("", asyncHandler(commentController.create));
 router.delete("", asyncHandler(commentController.delete));
 

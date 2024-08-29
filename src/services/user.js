@@ -183,6 +183,20 @@ class UserService {
     };
   };
 
+  findAll = async (keySearch) => {
+    let foundUsers;
+
+    if (keySearch) {
+      foundUsers = await UserModel.find({
+        user_name: { $regex: keySearch, $options: "i" },
+      });
+    } else {
+      foundUsers = await UserModel.find();
+    }
+
+    return foundUsers;
+  };
+
   updateInformation = async ({
     userID,
     name,
@@ -235,6 +249,17 @@ class UserService {
 
     console.log("Updated user: " + updatedUser, updatedUser.modifiedCount);
     return updatedUser.modifiedCount;
+  };
+
+  delete = async ({ deleteID, userID }) => {
+    const foundUser = await UserModel.findById(userID);
+    if (!foundUser.isAdmin) throw new NotFoundError("Authorization failure");
+
+    const deleteUser = await UserModel.findById(deleteID);
+    if (!foundUser) throw new NotFoundError("User not found");
+
+    const result = await UserModel.deleteOne({ _id: deleteUser._id });
+    return result;
   };
 }
 
