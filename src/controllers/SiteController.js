@@ -1,6 +1,8 @@
+const AnswerController = require("./AnswerController");
 class SiteController {
   async welcome(req, res, next) {
-    res.status(200).send({ message: "Welcome to the TOEIC API!" });
+    const result = await AnswerController.getAll();
+    res.status(200).send(result);
   }
 }
 
