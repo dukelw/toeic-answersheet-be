@@ -5,10 +5,9 @@ const dev = {
   db: {
     host: process.env.DEV_DB_HOST || "localhost",
     port: process.env.DEV_DB_PORT || 27017,
-    name: process.env.DEV_DB_NAME || "toeic_answer",
+    name: process.env.DEV_DB_NAME || "test",
   },
 };
-
 
 const pro = {
   app: {
@@ -17,7 +16,7 @@ const pro = {
   db: {
     host: process.env.PRO_DB_HOST || "localhost",
     port: process.env.PRO_DB_PORT || 27017,
-    name: process.env.PRO_DB_NAME || "toeic_answer_pro",
+    name: process.env.PRO_DB_NAME || "test_pro",
   },
 };
 
