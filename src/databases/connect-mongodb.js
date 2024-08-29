@@ -3,7 +3,8 @@ const {
   db: { host, name, port },
 } = require("../configs/mongodb");
 
-const connectString = `mongodb://${host}:${port}/${name}`;
+const connectString =
+  process.env.MONGODB_URL || `mongodb://${host}:${port}/${name}`;
 console.log(`Server will connect to mongodb: ${connectString}`);
 
 class Database {
