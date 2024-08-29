@@ -1,7 +1,8 @@
-const AnswerController = require("./AnswerController");
+const AnswerService = require("../services/answer");
 class SiteController {
   async welcome(req, res, next) {
-    const result = await AnswerController.getAll("TOEIC");
+    const result = await AnswerService.findAll();
+    console.log(result);
     res.status(200).send(result);
   }
 }
