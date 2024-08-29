@@ -6,6 +6,7 @@ const documentRouter = require("./document");
 const sliderRouter = require("./slider");
 const commentRouter = require("./comment");
 const notificationRouter = require("./notification");
+const siteRouter = require("./site");
 
 function route(app) {
   app.use("/api/v1/upload", uploadRouter);
@@ -16,6 +17,7 @@ function route(app) {
   app.use("/api/v1/slider", sliderRouter);
   app.use("/api/v1/comment", commentRouter);
   app.use("/api/v1/notification", notificationRouter);
+  app.use("/api/v1/", siteRouter);
 }
 
 module.exports = route;
