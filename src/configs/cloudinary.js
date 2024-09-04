@@ -4,7 +4,7 @@ const cloudinary = require("cloudinary").v2;
 // Return "https" URLs by setting secure: true
 cloudinary.config({
   cloud_name: "lewisshop",
-  api_key: "142223882891755",
+  api_key: process.env.CLOUDINARY_KEY,
   api_secret: process.env.CLOUDINARY_KEY_SECRET,
 });
 
