@@ -9,13 +9,6 @@ const { Server } = require("socket.io");
 const commentService = require("../src/services/comment");
 const notificationService = require("../src/services/notification");
 
-const corsOptions = {
-  origin: "http://localhost:1610",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  credentials: true, // enable set cookie
-};
-
 app.use(cors());
 
 // Init middlewares
@@ -36,7 +29,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://toeic-answersheet-fe.vercel.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
   },
 });
